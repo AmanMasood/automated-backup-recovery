@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"   # weekly re-test
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck
+        run: shellcheck -x -S warning scripts/*.sh tests/*.sh
+      - name: Backup / verify / retention / restore cycle
+        run: bash tests/test_backup_cycle.sh
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install pytest && python -m pytest -q tests
+      - name: PostgreSQL dump and restore round-trip
+        run: bash tests/test_postgres_roundtrip.sh
