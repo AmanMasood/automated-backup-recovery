@@ -1,0 +1,4 @@
+# /etc/cron.d/app-backup
+# Daily backup at 02:15, report check every morning (non-zero exit -> cron mails root / alerting picks it up)
+15 2 * * * root /opt/backup/scripts/backup.sh >> /var/log/backup.log 2>&1
+0 8 * * * root /usr/bin/python3 /opt/backup/scripts/backup_report.py --max-age-hours 26 >> /var/log/backup.log 2>&1

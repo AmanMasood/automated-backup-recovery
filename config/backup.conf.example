@@ -1,0 +1,28 @@
+# Copy to config/backup.conf (or /etc/backup.conf) and adjust.
+
+# Where archives are written
+BACKUP_ROOT=/var/backups/app
+
+# Space-separated list of directories to back up
+SOURCE_DIRS="/etc/nginx /var/www /opt/app/data"
+
+# Retention: daily archives to keep, and how many Sunday archives to keep as weekly
+KEEP_DAILY=7
+KEEP_WEEKLY=4
+
+# Optional PostgreSQL dump (leave PG_DATABASE empty to skip).
+# PG_CONTAINER: if set, pg_dump runs inside that Docker container.
+PG_DATABASE=
+PG_USER=postgres
+PG_HOST=localhost
+PG_CONTAINER=
+
+# Optional MySQL dump (leave MYSQL_DATABASE empty to skip)
+MYSQL_DATABASE=
+MYSQL_USER=root
+MYSQL_CONTAINER=
+
+# Optional off-site copy (requires aws cli + credentials)
+S3_BUCKET=
+
+LOG_FILE=/var/log/backup.log

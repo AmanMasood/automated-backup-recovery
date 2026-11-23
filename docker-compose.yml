@@ -1,0 +1,13 @@
+# Demo database used to test PostgreSQL dump + restore (also used in CI).
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: backup-demo-pg
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-demo-password}
+      POSTGRES_DB: shop
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 3s
+      retries: 20
